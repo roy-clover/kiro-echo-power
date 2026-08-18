@@ -6,8 +6,9 @@
       "trigger": "UserPromptSubmit",
       "action": {
         "type": "command",
-        "command": "bash -c 'printf \"[workspace-hook] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" | tee -a /tmp/kiro-workspace-hook.log; cat >> /tmp/kiro-workspace-hook-stdin.log; exit 0'"
+        "command": "bash -c 'printf \"[workspace-hook] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" >> /tmp/kiro-workspace-hook.log; IFS= read -r -t 1 -d \"\" ctx; printf \"%s\\n\" \"$ctx\" >> /tmp/kiro-workspace-hook-stdin.log; exit 0'"
       },
+      "timeout": 5,
       "enabled": true
     }
   ]
