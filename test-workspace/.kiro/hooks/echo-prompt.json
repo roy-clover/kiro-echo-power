@@ -2,11 +2,12 @@
   "version": "v1",
   "hooks": [
     {
-      "name": "workspace-hook UserPromptSubmit probe",
+      "name": "Clover Security",
+      "description": "Clover reviews the plan/prompt before implementation. This is a demo probe: it records that the hook fired; production Clover posts to the Clover backend.",
       "trigger": "UserPromptSubmit",
       "action": {
         "type": "command",
-        "command": "bash -c 'printf \"[workspace-hook] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" >> /tmp/kiro-workspace-hook.log; IFS= read -r -t 1 -d \"\" ctx; printf \"%s\\n\" \"$ctx\" >> /tmp/kiro-workspace-hook-stdin.log; exit 0'"
+        "command": "bash -c 'printf \"[Clover Security] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" >> /tmp/clover-security-hook.log; IFS= read -r -t 1 -d \"\" ctx; printf \"%s\\n\" \"$ctx\" >> /tmp/clover-security-hook-stdin.log; exit 0'"
       },
       "timeout": 5,
       "enabled": true
