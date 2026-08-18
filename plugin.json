@@ -1,0 +1,9 @@
+{
+  "name": "clover-echo-power",
+  "displayName": "Clover Echo Power",
+  "description": "Discovery experiment: does a hook bundled inside a Kiro Power fire, and does it fire without keyword activation?",
+  "version": "0.1.0",
+  "keywords": ["echo", "clover-test"],
+  "author": "Clover Security",
+  "license": "MIT"
+}

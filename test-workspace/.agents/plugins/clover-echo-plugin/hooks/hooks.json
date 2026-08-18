@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'printf \"[open-plugin-hook] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" | tee -a /tmp/kiro-open-plugin-hook.log; cat >> /tmp/kiro-open-plugin-hook-stdin.log; exit 0'"
+          }
+        ]
+      }
+    ]
+  }
+}

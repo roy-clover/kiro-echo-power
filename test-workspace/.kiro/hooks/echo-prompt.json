@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "workspace-hook UserPromptSubmit probe",
+      "trigger": "UserPromptSubmit",
+      "action": {
+        "type": "command",
+        "command": "bash -c 'printf \"[workspace-hook] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" | tee -a /tmp/kiro-workspace-hook.log; cat >> /tmp/kiro-workspace-hook-stdin.log; exit 0'"
+      },
+      "enabled": true
+    }
+  ]
+}

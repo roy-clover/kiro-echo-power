@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "clover-echo-power UserPromptSubmit probe",
+      "trigger": "UserPromptSubmit",
+      "action": {
+        "type": "command",
+        "command": "bash -c 'printf \"[clover-echo-power] UserPromptSubmit fired at %s\\n\" \"$(date -u +%FT%TZ)\" | tee -a /tmp/kiro-echo-power.log; cat >> /tmp/kiro-echo-power-stdin.log; exit 0'"
+      },
+      "enabled": true
+    }
+  ]
+}
