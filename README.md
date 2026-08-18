@@ -124,6 +124,30 @@ capturing the JSON payload):
 | Workspace hook | `/tmp/kiro-workspace-hook.log` | `/tmp/kiro-workspace-hook-stdin.log` |
 | Open-plugin hook | `/tmp/kiro-open-plugin-hook.log` | `/tmp/kiro-open-plugin-hook-stdin.log` |
 
+## If hooks don't fire (zero logs) — read this first
+
+Confirmed from the agent runtime bundled in Kiro 1.0.406 (`@kiro/agent`, the
+"v2" hook engine — hardcoded on, no setting):
+
+- The v2 engine reads **`<workspace>/.kiro/hooks/*.json`** and
+  **`~/.kiro/hooks/*.json`** in the `{"version":"v1","hooks":[...]}` format
+  used here, plus `.agents/plugins/<dir>/hooks/hooks.json`. (The `*.kiro.hook`
+  when/then files are a separate legacy system — ignore it.)
+- **Workspace trust is the silent kill switch.** In an untrusted workspace,
+  every hook trigger is replaced with a no-op and the suppression is logged
+  only at debug level — valid files, zero fires, zero visible errors.
+  Fix: Command palette → "Workspaces: Manage Workspace Trust" → Trust.
+- `.agents/plugins/` is scanned only when a session is built — **start a new
+  chat session** after adding files (editing anything under `.kiro/hooks/`
+  also triggers a reload of everything).
+- No approval click is needed for v2 command hooks; commands spawn with
+  `shell: true`, cwd = first workspace root, hook context JSON on stdin.
+- Load diagnostic: Output panel → Kiro Agent channel → look for
+  `[KiroAgent] v2 hooks loaded N standalone hooks from .kiro/hooks/` and
+  `... N Open Plugin hooks`. `N = 0` → wrong root or schema warning
+  (`Hook file does not match v2 schema` / `not valid JSON` in the same
+  channel); `N > 0` but no execution → workspace trust.
+
 ## Validation checklist
 
 1. Clear old logs: `rm -f /tmp/kiro-echo-power*.log /tmp/kiro-workspace-hook*.log /tmp/kiro-open-plugin-hook*.log`
